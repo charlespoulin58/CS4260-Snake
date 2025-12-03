@@ -37,7 +37,8 @@ class SnakeEnv(gym.Env):
         )
 
     def step(self, action):
-        self.last_obs, rewards, done, info = self.controller.step(action)
+        # Always pass a single integer as a list for controller.step
+        self.last_obs, rewards, done, info = self.controller.step([action])
         terminated = done  # Gymnasium expects 'terminated' for episode end
         truncated = False  # Set to True if you want to support truncation (e.g., max steps)
         return self.last_obs, rewards, terminated, truncated, info
