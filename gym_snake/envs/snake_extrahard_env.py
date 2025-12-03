@@ -1,7 +1,7 @@
 import os, subprocess, time, signal
-import gym
-from gym import error, spaces, utils
-from gym.utils import seeding
+import gymnasium as gym
+from gymnasium import error, spaces, utils
+from gymnasium.utils import seeding
 from gym_snake.envs.snake import Controller, Discrete
 from gym_snake.envs.snake_env import SnakeEnv
 

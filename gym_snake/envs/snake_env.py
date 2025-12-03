@@ -1,8 +1,8 @@
 import os, subprocess, time, signal
 import numpy as np
-import gym
-from gym import error, spaces, utils
-from gym.utils import seeding
+import gymnasium as gym
+from gymnasium import error, spaces, utils
+from gymnasium.utils import seeding
 from gym_snake.envs.snake import Controller, Discrete
 
 try:
@@ -38,9 +38,12 @@ class SnakeEnv(gym.Env):
 
     def step(self, action):
         self.last_obs, rewards, done, info = self.controller.step(action)
-        return self.last_obs, rewards, done, info
+        terminated = done  # Gymnasium expects 'terminated' for episode end
+        truncated = False  # Set to True if you want to support truncation (e.g., max steps)
+        return self.last_obs, rewards, terminated, truncated, info
 
-    def reset(self):
+    def reset(self, seed=None, options=None):
+        # Accept seed and options for Gymnasium compatibility
         self.controller = Controller(self.grid_size, self.unit_size, self.unit_gap, self.snake_size, self.n_snakes, self.n_foods, random_init=self.random_init)
         self.last_obs = self.controller.grid.grid.copy()
         return self.last_obs
